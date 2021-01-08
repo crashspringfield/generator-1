@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generative</title>
+  <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Courier+Prime&display=swap" rel="stylesheet">
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
+  <link href="./css/style.css" rel="stylesheet" />
+</head>
+<body>
+
+  <main role="main" class="container content">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-4">
+        <div id="instructions" class="mb-30">
+          <p>
+            <b class="orange">Generator 1</b> creates sounds based on the way the user's input interacts
+            with the existing environment.
+          </p>
+          <p class="mb-30">
+            If on a phone or tablet, tap the screen. If on a desktop, press any key.
+          </p>
+          <h6>
+            <b class="orange">How it works:</b>
+          </h6>
+          <p>
+            Each keypress or tap generates two parameters. These parameters are
+            used to generate <b class="orange">critters</b>. The first <b class="orange">
+            critter</b> is chosen randomly on page load.
+          <p>
+          </p>
+            <b class="orange">Critters</b> are essentially synthesizers that generate
+            a specific sound or sequence based on the paramaters passed.
+          </p>
+          <p>
+            After generating a sound, the <b class="orange">critter</b> passes a
+            <b class="orange">spore</b> back to the environment, modifying the
+            initial conditions in place when the user calls the next <b class="orange">
+            critter</b> into being.
+          </p>
+          <p>
+            Expand on the <a href="https://github.com/crashspringfield/generator-1" target="_blank" class="td-underline">
+            source code</a> to create your own critters.
+          </p>
+        </div>
+      </div> <!-- end col -->
+
+      <div class="col-xs-12 col-sm-12 col-md-8 digital-outline center-v">
+        <div>
+          <p>
+            One day <b class="orange">critters</b> will make colors. One day,
+            entire libraries of <b class="orange">critters</b> will exist for
+            you to chose from.
+          </p>
+          <p>
+            Until then, this is empty.
+          </p>
+        </div>
+      </div> <!-- end col -->
+    </div> <!-- end row -->
+  </main>
+
+  <script src="./dist/main.js"></script>
+</body>
+</html>
