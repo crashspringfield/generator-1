@@ -1,6 +1,7 @@
 import { AMSynth } from 'tone'
 import { triad, triad135, triad351, triad513 } from './polysynthTriads.js'
-import { fourth, fourth14, fourth41 } from './polysynthFourths'
+import { fourth, fourth14, fourth41 } from './polysynthFourths.js'
+import { drop, fadeIn, intervalDelay } from './snowday.js'
 
 const SCALE = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
 
@@ -53,16 +54,20 @@ const am3 = (octave, length) => {
 /**
  * Packs
  *
- * Array of 10 critters.
  * Critters can be mixed/matched in different packs for different musical effects.
  */
 const harmonic = [
   triad, triad135, triad351, triad513, fourth, fourth14, fourth41, am1, am2, am3
 ]
 
+const snowday = [
+  drop, fadeIn, intervalDelay, triad, fourth
+]
+
 /**
  * Exports
  */
 export {
-  harmonic
+  harmonic,
+  snowday
 }

@@ -11,7 +11,7 @@ Critters are essentially synthesizers that generate a specific sound or sequence
 After generating a sound, the critter passes a spore back to the environment, modifying the initial conditions in place when the user calls the next critter into being.
 
 
-Try the [demo](https://exclusive-or.io/generator-1).
+Try the [demo](https://exclusive-or.io/generative-1).
 
 ## Getting started
 ```

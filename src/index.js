@@ -1,4 +1,4 @@
-import { harmonic } from './critters.js'
+import { harmonic, snowday } from './critters/index.js'
 import { countDown } from './helpers.js'
 
 // Verify nonzero parameter passed from one critter to the next.
@@ -19,12 +19,7 @@ document.addEventListener('keydown', e => {
   const fn   = countDown(spore, critters)
   const next = fn(a, b)
 
-console.log('next', next)
-
   spore = generateSpore(next, spore)
-
-console.log('spore', spore)
-
 })
 
 document.addEventListener('touchstart', e => {
@@ -35,13 +30,9 @@ document.addEventListener('touchstart', e => {
   const fn   = countDown(spore, critters)
   const next = fn(a, b)
 
-console.log('next', next)
-
   spore = generateSpore(next, spore)
-
-console.log('spore', spore)
 })
 
 // Begin application
-const critters = harmonic
+const critters = snowday
 let spore      = generateSpore()
