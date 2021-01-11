@@ -1,5 +1,5 @@
 import { PolySynth }  from 'tone'
-import { nextInternal } from './helpers.js'
+import { nextInternal } from '../helpers.js'
 
 // TODO: Make customizable.
 const SCALE = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
