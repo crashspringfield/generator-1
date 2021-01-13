@@ -1,5 +1,6 @@
-import { PolySynth }  from 'tone'
+import { AutoWah, PingPongDelay, PolySynth }  from 'tone'
 import { nextInternal } from '../helpers.js'
+import { updateCritter } from '../animations'
 
 // TODO: Make customizable.
 const SCALE = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
@@ -16,35 +17,44 @@ const SCALE = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
 
 // Plays a 1st and 4th interval
 const fourth = (counter, modifier) => {
-  const octave = modifier % 4
-  const detune = modifier * 100
-  const synth  = new PolySynth().toDestination()
-  const first  = nextInternal(counter, octave, SCALE)
-  const fourth = nextInternal(SCALE.indexOf(first.note) + 3, first.octave, SCALE)
-  const chord  = [
+  const octave  = modifier
+  const detune  = modifier * 100
+  // const autoWah = new AutoWah(50, 6, -10).toDestination()
+  const synth   = new PolySynth().toDestination()
+  const first   = nextInternal(counter, octave, SCALE)
+  const fourth  = nextInternal(SCALE.indexOf(first.note) + 3, first.octave, SCALE)
+  const chord   = [
     `${first.note}${first.octave}`,
     `${fourth.note}${fourth.octave}`
   ]
 
-  console.log(`PolySynth - chord: ${chord.join(' ')}, detune: ${detune}`)
+  console.log(`PolySynth - fourth: ${chord.join(' ')}, detune: ${detune}`)
+
+  // autoWah.Q.value = octave + 2
+
+  const chaos = updateCritter(octave, modifier)
 
   synth.set({ detune: detune })
-  synth.triggerAttackRelease(chord, 2)
+  synth.triggerAttackRelease(chord, 1)
 
-  return parseInt(octave) * 2
+  setTimeout(() => { synth.dispose()}, 5000)
+
+  return Math.abs(chaos - modifier)
 }
 
 // Plays a 1st then 4th interval
 const fourth14 = (counter, modifier) => {
-  const octave = modifier % 4
+  const octave = modifier
   const detune = modifier * 100
-  const synth  = new PolySynth().toDestination()
+  const delay  = new PingPongDelay(parseFloat(`0.${counter}`), parseFloat(`0.${modifier}`)).toDestination()
+  const synth  = new PolySynth().connect(delay).toDestination()
   const first  = nextInternal(counter, octave, SCALE)
   const fourth = nextInternal(SCALE.indexOf(first.note) + 3, first.octave, SCALE)
   const chord  = [
     `${first.note}${first.octave}`,
     `${fourth.note}${fourth.octave}`
   ]
+  const chaos   = updateCritter(octave, modifier)
 
   console.log(`PolySynth - chord: ${chord.join(' ')}, detune: ${detune}`)
 
@@ -52,14 +62,15 @@ const fourth14 = (counter, modifier) => {
   synth.triggerAttackRelease(`${first.note}${first.octave}`, 1)
   synth.triggerAttackRelease(`${fourth.note}${fourth.octave}`, 1, 1)
 
-  return parseInt(octave) + 1
+  return chaos + 1
 }
 
 // Plays a 4th then 1st interval
 const fourth41 = (counter, modifier) => {
-  const octave = modifier % 4
+  const octave = modifier
   const detune = modifier * 100
-  const synth  = new PolySynth().toDestination()
+  const delay  = new PingPongDelay(parseFloat(`0.${counter}`), parseFloat(`0.${modifier}`)).toDestination()
+  const synth  = new PolySynth().connect(delay).toDestination()
   const first  = nextInternal(counter, octave, SCALE)
   const fourth = nextInternal(SCALE.indexOf(first.note) + 3, first.octave, SCALE)
 
@@ -68,15 +79,16 @@ const fourth41 = (counter, modifier) => {
     `${fourth.note}${fourth.octave}`
   ]
 
+  const chaos   = updateCritter(octave, modifier)
+
   console.log(`PolySynth - chord: ${chord.join(' ')}, detune: ${detune}`)
 
   synth.set({ detune: detune })
   synth.triggerAttackRelease(`${fourth.note}${fourth.octave}`, 1)
   synth.triggerAttackRelease(`${first.note}${first.octave}`, 1, 1)
 
-  return parseInt(octave) + 4
+  return chaos + 4
 }
-
 
 /**
  * Exports

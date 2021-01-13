@@ -1,5 +1,6 @@
 import { PolySynth }  from 'tone'
 import { nextInternal } from '../helpers.js'
+import { updateCritter } from '../animations'
 
 // TODO: Make customizable.
 const SCALE = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
@@ -17,8 +18,7 @@ const SCALE = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
 // Plays a triad
 const triad = (counter, modifier) => {
   const synth  = new PolySynth().toDestination()
-
-  const octave = modifier % 3
+  const octave = modifier > 5 ? 3 : 4
   const detune = modifier * 50
   const first  = nextInternal(counter, octave, SCALE)
   const third  = nextInternal(SCALE.indexOf(first.note) + 2, first.octave, SCALE)
@@ -29,12 +29,16 @@ const triad = (counter, modifier) => {
     `${fifth.note}${fifth.octave}`
   ]
 
-  console.log(`PolySynth - chord: ${chord.join(' ')}, detune: ${detune}`)
+  console.log(`PolySynth - fifth: ${chord.join(' ')}, detune: ${detune}`)
+
+  const chaos = updateCritter(octave, modifier)
 
   synth.set({ detune: detune })
   synth.triggerAttackRelease(chord, [3, 1, 2])
 
-  return parseInt(octave) * 3
+  setTimeout(() => { synth.dispose()}, 5000)
+
+  return Math.abs(chaos - modifier)
 }
 
 // Plays the first, third, then fifth of a triad

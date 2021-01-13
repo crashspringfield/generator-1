@@ -165,6 +165,13 @@ a:hover {
   -moz-box-shadow: 0px 0px 10px 5px rgba(210,127,30,0.75);
 }
 
+.field {
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  min-height: 80vh;
+}
+
 .hover {
   cursor: pointer;
 }
@@ -203,6 +210,14 @@ a:hover {
 
 .pa-20 {
   padding: 20px;
+}
+
+.pl-0 {
+  padding-left: 0px!important;
+}
+
+.pr-0 {
+  padding-right: 0px!important;
 }
 
 .orange {
