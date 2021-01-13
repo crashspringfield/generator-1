@@ -1,5 +1,5 @@
 import { harmonic, snowday } from './critters/index.js'
-import { countDown } from './helpers.js'
+import { countDown, workingNumber } from './helpers.js'
 
 // Verify nonzero parameter passed from one critter to the next.
 const generateSpore = previous => {
@@ -17,7 +17,7 @@ document.addEventListener('keydown', e => {
   const b = e.keyCode.toString()[1]
 
   const fn   = countDown(spore, critters)
-  const next = fn(a, b)
+  const next = fn(workingNumber(a, 1), workingNumber(b, 1))
 
   spore = generateSpore(next, spore)
 })

@@ -27,7 +27,17 @@ const nextInternal = (index, octave, scale) => {
   return nextInternal(index - scale.length, parseInt(octave) + 1, scale)
 }
 
+/**
+ * Make sure each function gets a working number that won't crash
+ */
+const workingNumber = (val, greaterThan) => {
+  const int = Math.floor(parseInt(val))
+
+  return int > greaterThan ? int : int + 2
+}
+
 export {
   countDown,
-  nextInternal
+  nextInternal,
+  workingNumber
 }

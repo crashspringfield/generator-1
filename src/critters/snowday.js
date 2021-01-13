@@ -1,5 +1,6 @@
 import { FeedbackDelay, MembraneSynth, MonoSynth, PingPongDelay, PolySynth } from 'tone'
 import { countDown, nextInternal } from '../helpers.js'
+import { updateCritter } from '../animations'
 
 const SCALE     = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
 const WAVEFORMS = [ 'sine', 'square', 'triangle', 'sawtooth' ]
@@ -14,14 +15,17 @@ const drop = (octaves, modifier) => {
   	pitchDecay: 0.1
   }).connect(delay)
 
+  const chaos = updateCritter(modifier, octaves)
   drum.triggerAttackRelease(`${first.note}${first.octave}`, `${count * 4}n`)
 
-  return Math.abs(octaves - modifier)
+  setTimeout(() => { drum.dispose() }, 5000)
+
+  return Math.abs(chaos - modifier)
 }
 
 // Fades into pitch
 const fadeIn = (counter, modifier) => {
-  const octave = counter > 5 ? 2 : 3
+  const octave = counter > 5 ? 3 : 4
   const first  = nextInternal(counter, octave, SCALE)
   const wave   = countDown(SCALE.indexOf(first.note), WAVEFORMS)
   const synth  = new MonoSynth({
@@ -30,15 +34,19 @@ const fadeIn = (counter, modifier) => {
   	},
   	envelope: {
   		attack: 1,
-      release: octave - 1
+      release: parseInt(`0.${octave}`)
   	}
   }).toDestination()
 
+  const chaos = updateCritter(counter, modifier)
+
   synth.triggerAttackRelease(`${first.note}${first.octave}`)
 
-  console.log(`MonoSynth: ${first.note}${first.octave} with ${wave} wave and release of ${octave - 1}`)
+  console.log(`MonoSynth: ${first.note}${first.octave} with ${wave} wave and release of 0.${octave}`)
 
-  return SCALE.indexOf(wave) > 0 ? SCALE.indexOf(wave) : counter
+  setTimeout(() => { synth.dispose()}, 5000)
+
+  return Math.abs(chaos - modifier)
 }
 
 const intervalDelay = (counter, modifier) => {
@@ -55,12 +63,16 @@ const intervalDelay = (counter, modifier) => {
     `${fifth.note}${fifth.octave}`
   ]
 
+  const chaos = updateCritter(counter, modifier)
+
   synth.triggerAttackRelease([ `${first.note}${first.octave}`, `${third.note}${third.octave}` ], 1)
   synth.triggerAttackRelease([`${third.note}${third.octave}`, `${fifth.note}${fifth.octave}`], 1, parseFloat(`0.${octave}`), 0.7)
 
-  console.log(`PolySynth - chord: ${chord.join(' ')}, delay: 0.${counter} 0.${modifier}`)
+  console.log(`PolySynth - delay: ${chord.join(' ')}, delay: 0.${counter} 0.${modifier}`)
 
-  return SCALE.indexOf(fifth) > 0 ? SCALE.indexOf(fifth) : octave
+  setTimeout(() => { synth.dispose()}, 5000)
+
+  return Math.abs(chaos - modifier)
 }
 
 export {
