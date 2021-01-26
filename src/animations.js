@@ -36,7 +36,7 @@ const dodecahedron = new THREE.DodecahedronGeometry()
 const icosahedron  = new THREE.IcosahedronGeometry()
 const lathe        = new THREE.LatheGeometry(points)
 const octahedron   = new THREE.OctahedronGeometry()
-const polyhedron = new THREE.PolyhedronGeometry(verticesOfCube, indicesOfFaces, 6, 2)
+const polyhedron   = new THREE.PolyhedronGeometry(verticesOfCube, indicesOfFaces, 6, 2)
 
 // Array constants.
 const SHAPES = [ lathe, polyhedron, octahedron, dodecahedron, icosahedron ]

@@ -1,3 +1,6 @@
+const C_MAJOR   = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
+const WAVEFORMS = [ 'sine', 'square', 'triangle', 'sawtooth' ]
+
 /**
  * Iterate over an array until the index is found. If the index is greater
  * than the length of the array, start over.
@@ -19,25 +22,27 @@ const countDown = (index, array) => {
  * {@param} - octave - Current octave w/in scale.
  * {@param} - scale  - Array of notes that make up scale.
  */
-const nextInternal = (index, octave, scale) => {
+const nextInterval = (index, octave, scale) => {
   if (index < scale.length) {
     return { note: scale[index], octave: octave }
   }
 
-  return nextInternal(index - scale.length, parseInt(octave) + 1, scale)
+  return nextInterval(index - scale.length, parseInt(octave) + 1, scale)
 }
 
 /**
  * Make sure each function gets a working number that won't crash
  */
 const workingNumber = (val, greaterThan) => {
-  const int = Math.floor(parseInt(val))
+  const int = Math.abs(Math.floor(parseInt(val)))
 
   return int > greaterThan ? int : int + 2
 }
 
 export {
+  C_MAJOR,
+  WAVEFORMS,
   countDown,
-  nextInternal,
-  workingNumber
+  nextInterval,
+  workingNumber,
 }
