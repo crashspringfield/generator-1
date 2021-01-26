@@ -1,14 +1,11 @@
 import { FeedbackDelay, MembraneSynth, MonoSynth, PingPongDelay, PolySynth } from 'tone'
-import { countDown, nextInternal } from '../helpers.js'
+import { countDown, nextInterval, C_MAJOR, WAVEFORMS } from '../helpers.js'
 import { updateCritter } from '../animations'
-
-const SCALE     = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
-const WAVEFORMS = [ 'sine', 'square', 'triangle', 'sawtooth' ]
 
 // MebraneSynth with feedback delay
 const drop = (octaves, modifier) => {
   const count = modifier % 2 ? 8 : 4
-  const first = nextInternal(octaves, 2, SCALE)
+  const first = nextInterval(octaves, 2, C_MAJOR)
   const delay = new FeedbackDelay(`${count}n`, parseFloat(`0.${octaves + modifier}`)).toDestination()
   const drum  = new MembraneSynth({
   	octaves:    octaves,
@@ -23,11 +20,11 @@ const drop = (octaves, modifier) => {
   return Math.abs(chaos - modifier)
 }
 
-// Fades into pitch
+// MonoSynth that fades into pitch
 const fadeIn = (counter, modifier) => {
   const octave = counter > 5 ? 3 : 4
-  const first  = nextInternal(counter, octave, SCALE)
-  const wave   = countDown(SCALE.indexOf(first.note), WAVEFORMS)
+  const first  = nextInterval(counter, octave, C_MAJOR)
+  const wave   = countDown(C_MAJOR.indexOf(first.note), WAVEFORMS)
   const synth  = new MonoSynth({
   	oscillator: {
   		type: wave
@@ -49,14 +46,15 @@ const fadeIn = (counter, modifier) => {
   return Math.abs(chaos - modifier)
 }
 
+// Polysynth with PingPongDelay time and chord set by input.
 const intervalDelay = (counter, modifier) => {
   const pingPong = new PingPongDelay(parseFloat(`0.${counter}`), parseFloat(`0.${modifier}`)).toDestination()
   const synth    = new PolySynth().connect(pingPong).toDestination()
 
   const octave = counter > 5 ? 3 : 4
-  const first  = nextInternal(counter, octave, SCALE)
-  const third  = nextInternal(SCALE.indexOf(first.note) + 2, first.octave, SCALE)
-  const fifth  = nextInternal(SCALE.indexOf(third.note) + 2, third.octave, SCALE)
+  const first  = nextInterval(counter, octave, C_MAJOR)
+  const third  = nextInterval(C_MAJOR.indexOf(first.note) + 2, first.octave, C_MAJOR)
+  const fifth  = nextInterval(C_MAJOR.indexOf(third.note) + 2, third.octave, C_MAJOR)
   const chord  = [
     `${first.note}${first.octave}`,
     `${third.note}${third.octave}`,

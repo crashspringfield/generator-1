@@ -1,9 +1,6 @@
 import { AutoWah, PingPongDelay, PolySynth }  from 'tone'
-import { nextInternal } from '../helpers.js'
+import { nextInterval, C_MAJOR } from '../helpers.js'
 import { updateCritter } from '../animations'
-
-// TODO: Make customizable.
-const SCALE = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
 
 /**
  * Critters
@@ -21,8 +18,8 @@ const fourth = (counter, modifier) => {
   const detune  = modifier * 100
   // const autoWah = new AutoWah(50, 6, -10).toDestination()
   const synth   = new PolySynth().toDestination()
-  const first   = nextInternal(counter, octave, SCALE)
-  const fourth  = nextInternal(SCALE.indexOf(first.note) + 3, first.octave, SCALE)
+  const first   = nextInterval(counter, octave, C_MAJOR)
+  const fourth  = nextInterval(C_MAJOR.indexOf(first.note) + 3, first.octave, C_MAJOR)
   const chord   = [
     `${first.note}${first.octave}`,
     `${fourth.note}${fourth.octave}`
@@ -48,8 +45,8 @@ const fourth14 = (counter, modifier) => {
   const detune = modifier * 100
   const delay  = new PingPongDelay(parseFloat(`0.${counter}`), parseFloat(`0.${modifier}`)).toDestination()
   const synth  = new PolySynth().connect(delay).toDestination()
-  const first  = nextInternal(counter, octave, SCALE)
-  const fourth = nextInternal(SCALE.indexOf(first.note) + 3, first.octave, SCALE)
+  const first  = nextInterval(counter, octave, C_MAJOR)
+  const fourth = nextInterval(C_MAJOR.indexOf(first.note) + 3, first.octave, C_MAJOR)
   const chord  = [
     `${first.note}${first.octave}`,
     `${fourth.note}${fourth.octave}`
@@ -71,8 +68,8 @@ const fourth41 = (counter, modifier) => {
   const detune = modifier * 100
   const delay  = new PingPongDelay(parseFloat(`0.${counter}`), parseFloat(`0.${modifier}`)).toDestination()
   const synth  = new PolySynth().connect(delay).toDestination()
-  const first  = nextInternal(counter, octave, SCALE)
-  const fourth = nextInternal(SCALE.indexOf(first.note) + 3, first.octave, SCALE)
+  const first  = nextInterval(counter, octave, C_MAJOR)
+  const fourth = nextInterval(C_MAJOR.indexOf(first.note) + 3, first.octave, C_MAJOR)
 
   const chord  = [
     `${first.note}${first.octave}`,

@@ -1,9 +1,6 @@
 import { PolySynth }  from 'tone'
-import { nextInternal } from '../helpers.js'
+import { nextInterval, C_MAJOR } from '../helpers.js'
 import { updateCritter } from '../animations'
-
-// TODO: Make customizable.
-const SCALE = [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ]
 
 /**
  * Critters
@@ -20,9 +17,9 @@ const triad = (counter, modifier) => {
   const synth  = new PolySynth().toDestination()
   const octave = modifier > 5 ? 3 : 4
   const detune = modifier * 50
-  const first  = nextInternal(counter, octave, SCALE)
-  const third  = nextInternal(SCALE.indexOf(first.note) + 2, first.octave, SCALE)
-  const fifth  = nextInternal(SCALE.indexOf(third.note) + 2, third.octave, SCALE)
+  const first  = nextInterval(counter, octave, C_MAJOR)
+  const third  = nextInterval(C_MAJOR.indexOf(first.note) + 2, first.octave, C_MAJOR)
+  const fifth  = nextInterval(C_MAJOR.indexOf(third.note) + 2, third.octave, C_MAJOR)
   const chord  = [
     `${first.note}${first.octave}`,
     `${third.note}${third.octave}`,
@@ -47,9 +44,9 @@ const triad135 = (counter, modifier) => {
 
   const octave = modifier % 3
   const detune = modifier * 50
-  const first  = nextInternal(counter, octave, SCALE)
-  const third  = nextInternal(SCALE.indexOf(first.note) + 2, first.octave, SCALE)
-  const fifth  = nextInternal(SCALE.indexOf(third.note) + 2, third.octave, SCALE)
+  const first  = nextInterval(counter, octave, C_MAJOR)
+  const third  = nextInterval(C_MAJOR.indexOf(first.note) + 2, first.octave, C_MAJOR)
+  const fifth  = nextInterval(C_MAJOR.indexOf(third.note) + 2, third.octave, C_MAJOR)
   const chord  = [
     `${first.note}${first.octave}`,
     `${third.note}${third.octave}`,
@@ -72,9 +69,9 @@ const triad351 = (counter, modifier) => {
 
   const octave = modifier % 3
   const detune = modifier * 50
-  const first  = nextInternal(counter, octave, SCALE)
-  const third  = nextInternal(SCALE.indexOf(first.note) + 2, first.octave, SCALE)
-  const fifth  = nextInternal(SCALE.indexOf(third.note) + 2, third.octave, SCALE)
+  const first  = nextInterval(counter, octave, C_MAJOR)
+  const third  = nextInterval(C_MAJOR.indexOf(first.note) + 2, first.octave, C_MAJOR)
+  const fifth  = nextInterval(C_MAJOR.indexOf(third.note) + 2, third.octave, C_MAJOR)
   const chord  = [
     `${first.note}${first.octave}`,
     `${third.note}${third.octave}`,
@@ -97,9 +94,9 @@ const triad513 = (counter, modifier) => {
 
   const octave = modifier % 3
   const detune = modifier * 50
-  const first  = nextInternal(counter, octave, SCALE)
-  const third  = nextInternal(SCALE.indexOf(first.note) + 2, first.octave, SCALE)
-  const fifth  = nextInternal(SCALE.indexOf(third.note) + 2, third.octave, SCALE)
+  const first  = nextInterval(counter, octave, C_MAJOR)
+  const third  = nextInterval(C_MAJOR.indexOf(first.note) + 2, first.octave, C_MAJOR)
+  const fifth  = nextInterval(C_MAJOR.indexOf(third.note) + 2, third.octave, C_MAJOR)
   const chord  = [
     `${first.note}${first.octave}`,
     `${third.note}${third.octave}`,
